@@ -1,89 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-class Program
+public partial class Program
 {
-
-    static void Main(string[] args)
+    static bool IsArrayLengthCorrect(int length)
     {
-        string exp = Console.ReadLine();
-        Console.WriteLine(Calculate(exp));
+        return length > 0;
     }
 
-
-    private static bool isCorrectSequence(string exp)
+    static bool GenerateArray(int length, out int[] arr)
     {
-        int counter = 0;
-        foreach (var ch in exp)
+        arr = new int[length];
+        bool ok;
+        for (int i = 0; i < length; ++i)
         {
-            if (ch == '(')
-                counter++;
-            if (ch == ')')
+            ok = int.TryParse(Console.ReadLine(), out arr[i]);
+            if (!ok)
             {
-                if (counter == 0)
-                    return false;
-                counter--;
+                return false;
             }
         }
-        return counter == 0;
+        return true;
     }
 
-
-    private static int Calculate(string exp)
+    public static double GetArrayAverage(int[] arr)
     {
-        if (exp.Length == 0)
-            return 0;
-        if (exp.All(c => char.IsDigit(c)))
-            return int.Parse(exp);
-        if (exp.StartsWith("(") && exp.EndsWith(")") &&
-            isCorrectSequence(exp.Substring(1, exp.Length - 2)))
-            return Calculate(exp.Substring(1, exp.Length - 2));
-        int ind = FindIndexOfOperation(exp);
-        char oper = exp[ind];
-        string first = exp.Substring(0, ind),
-            second = exp.Substring(ind + 1);
-        switch (oper)
+        double sum = 0;
+        int n = arr.Length;
+        foreach (var item in arr)
         {
-            case '+':
-                return Calculate(first) + Calculate(second);
-            case '-':
-                return Calculate(first) - Calculate(second);
-            case '*':
-                return Calculate(first) * Calculate(second);
-            case '/':
-                return Calculate(first) / Calculate(second);
-            default:
-                throw new ArgumentOutOfRangeException("Incorrect operation");
+            sum += item;
         }
+        return sum / n;
     }
 
-    private static int FindIndexOfOperation(string exp)
+    public static int GetSumOfNumbersLessThanAverage(int[] arr, double average)
     {
-        int ind = exp.Length - 1;
-        int counter = 0;
-        for (; ind >= 0; ind--)
+        int sum = 0;
+        foreach (var item in arr)
         {
-            if (counter == 0 && (exp[ind] == '+' || exp[ind] == '-'))
-                if (ind == 0 || exp[ind - 1] != '*' && exp[ind - 1] != '/')
-                    return ind;
-            if (exp[ind] == ')')
-                counter++;
-            if (exp[ind] == '(')
-                counter--;
+            if (item < average)
+            {
+                sum += item;
+            }
         }
-        ind = exp.Length - 1;
-        for (; ind >= 0; ind--)
-        {
-            if (counter == 0 && (exp[ind] == '*' || exp[ind] == '/'))
-                return ind;
-            if (exp[ind] == ')')
-                counter++;
-            if (exp[ind] == '(')
-                counter--;
-        }
-        return ind;
+        return sum;
     }
 }
