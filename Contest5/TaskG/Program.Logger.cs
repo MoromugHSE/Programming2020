@@ -10,17 +10,65 @@ public partial class Program
 
     public class Logger
     {
-        string[] logs;
-        private static Logger logger;
+        private string[] logs = new string[0];
+
+        private const string FilePath = "logs.log";
+
+        private static Logger logger = new Logger();
 
         public static Logger GetLogger()
         {
-            throw new NotImplementedException();
+            return logger;
+        }
+
+        private void AddLog(string text)
+        {
+            Array.Resize(ref logs, logs.Length + 1);
+            logs[logs.Length - 1] = text;
+        }
+
+        private void DeleteLastLog()
+        {
+            if (logs.Length == 0)
+            {
+                File.AppendAllLines(FilePath, new string[] { "No active logs" });
+                return;
+            }
+            logs[logs.Length - 1] = null;
+            Array.Resize(ref logs, logs.Length - 1);
+        }
+
+        private void WriteAllLogs()
+        {
+            if (logs.Length == 0)
+            {
+                File.AppendAllLines(FilePath, new string[] { "No active logs" });
+                return;
+            }
+            File.AppendAllLines(FilePath, logs);
+            logs = new string[0];
         }
 
         public static void HandleCommand(string command)
         {
-            throw new NotImplementedException();
+            switch(command[0])
+            {
+                case 'A':
+                    {
+                        logger.AddLog(command.Substring(8, command.Length-8-1));
+                        return;
+                    }
+                case 'D':
+                    {
+                        logger.DeleteLastLog();
+                        return;
+                    }
+                case 'W':
+                    {
+                        logger.WriteAllLogs();
+                        return;
+                    }
+            }
         }
     }
 
