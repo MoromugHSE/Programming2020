@@ -5,7 +5,7 @@ public partial class Program
 {
     public static bool ParseCommandsCount(string input, out int count)
     {
-        throw new NotImplementedException();
+        return int.TryParse(input, out count) && count > 0;
     }
 
     public class Logger

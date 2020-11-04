@@ -19,27 +19,65 @@ public class Triangle
 
     public double GetPerimeter()
     {
-        throw new NotImplementedException();
+        return AB + AC + BC;
     }
 
     public double GetSquare()
     {
-        throw new NotImplementedException();
+        double halfPer = GetPerimeter() / 2;
+        return Math.Sqrt(halfPer * (halfPer - AB) * (halfPer - AC) * (halfPer - BC));
     }
 
     public bool GetAngleBetweenEqualsSides(out double angle)
     {
-        throw new NotImplementedException();
+        if (Math.Abs(AB - AC) < 1e-6)
+        {
+            angle = 2 * Math.Asin(BC / 2 / AC);
+            return true;
+        }
+        if (Math.Abs(AC - BC) < 1e-6)
+        {
+            angle = 2 * Math.Asin(AB / 2 / BC);
+            return true;
+        }
+        if (Math.Abs(BC - AB) < 1e-6)
+        {
+            angle = 2 * Math.Asin(AC / 2 / AB);
+            return true;
+        }
+        angle = double.NaN;
+        return false;
     }
 
     public bool GetHypotenuse(out double hypotenuse)
     {
-        throw new NotImplementedException();
+        double AB = this.AB;
+        double AC = this.AC;
+        double BC = this.BC;
+        if (Math.Abs(AB * AB + AC * AC - BC * BC) < 1e-6)
+        {
+            hypotenuse = BC;
+            return true;
+        }
+        if (Math.Abs(AC * AC + BC * BC - AB * AB) < 1e-6)
+        {
+            hypotenuse = AB;
+            return true;
+        }
+        if (Math.Abs(BC * BC + AB * AB - AC * AC) < 1e-6)
+        {
+            hypotenuse = AC;
+            return true;
+        }
+        hypotenuse = double.NaN;
+        return false;
     }
 
-    
+
     private static double GetLengthOfSide(Point first, Point second)
     {
-        throw new NotImplementedException();
+        double xCoord = first.GetX() - second.GetX();
+        double yCoord = first.GetY() - second.GetY();
+        return Math.Sqrt(xCoord * xCoord + yCoord * yCoord);
     }
 }
