@@ -5,41 +5,19 @@ using System.Text;
 
 class IntWrapper
 {
+    private int number;
+
     public IntWrapper(int number)
     {
-        int[][] bellTriangle = new int[rowCount][];
-        for (int i = 0; i < rowCount; ++i)
-        {
-            bellTriangle[i] = new int[i + 1];
-            if (i == 0)
-            {
-                bellTriangle[i][0] = 1;
-                continue;
-            }
-            for (int j = 0; j < i + 1; ++j)
-            {
-                if (j == 0)
-                {
-                    bellTriangle[i][j] = bellTriangle[i - 1][i - 1];
-                }
-                else
-                {
-                    bellTriangle[i][j] = bellTriangle[i - 1][j - 1] + bellTriangle[i][j - 1];
-                }
-            }
-        }
-        return bellTriangle;
+        this.number = number;
     }
 
     public int FindNumberLength()
     {
-        foreach (var row in array)
+        if (number < 0)
         {
-            foreach( var item in row)
-            {
-                Console.Write($"{item} ");
-            }
-            Console.WriteLine();
+            throw new ArgumentException("Number should be non-negative.");
         }
+        return number.ToString().Length;
     }
 }

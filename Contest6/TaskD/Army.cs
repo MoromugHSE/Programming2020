@@ -4,32 +4,32 @@ using System.Text;
 
 class Soldier
 {   
-    public string Attack()
+    public virtual string Attack()
     {
-        throw new NotImplementedException();
+        return "Shoot from gun";
     }
 }
 
 class CoolerSoldier : Soldier
 {
-    public string Attack()
+    public override string Attack()
     {
-        throw new NotImplementedException();
+        return "Shoot from gun and throw a grenade";
     }
 }
 
 class ManInBlack : Soldier
 {
-    public string Attack()
+    public new virtual string Attack()
     {
-        throw new NotImplementedException();
+        return "Shoot from blaster";
     }
 }
 
 class ManInBlackBoss : ManInBlack
 {
-    public string Attack()
+    public override string Attack()
     {
-        throw new NotImplementedException();
+        return "Shoot from blaster and call an army of aliens";
     }
 }

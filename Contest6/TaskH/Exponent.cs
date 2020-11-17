@@ -4,6 +4,6 @@ public class Exponent : Function
 {
     public override double GetValueInX(double x)
     {
-        throw new NotImplementedException();
+        return Math.Exp(1 / x);
     }
 }

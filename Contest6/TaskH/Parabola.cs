@@ -4,6 +4,6 @@ public class Parabola : Function
 {
     public override double GetValueInX(double x)
     {
-        throw new NotImplementedException();
+        return x * x + x + 7;
     }
 }
