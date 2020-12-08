@@ -4,12 +4,68 @@ using System.Collections.Generic;
 
 public class ArchaeologicalFind
 {
+    private int age;
+    private int weight;
+    private int findNumber;
+    private string name;
+
+    private static int findsNumber;
 
     public ArchaeologicalFind(int age, int weight, string name)
     {
-        throw new NotImplementedException();
+        Age = age;
+        Weight = weight;
+        Name = name;
     }
     
+    public int Age
+    {
+        get => age;
+        private set
+        {
+            if (value <= 0)
+            {
+                throw new ArgumentException("Incorrect age");
+            }
+            age = value;
+        }
+    }
+
+    public int Weight
+    {
+        get => weight;
+        private set
+        {
+            if (value <= 0)
+            {
+                throw new ArgumentException("Incorrect weight");
+            }
+            weight = value;
+        }
+    }
+
+    public string Name
+    {
+        get => name;
+        private set
+        {
+            if (value.Equals("?"))
+            {
+                throw new ArgumentException("Undefined name");
+            }
+            name = value;
+        }
+    }
+
+    public static int TotalFindsNumber
+    {
+        get => findsNumber;
+        private set
+        {
+            findsNumber = value;
+        }
+    }
+
     /// <summary>
     /// Добавляет находку в список.
     /// </summary>
@@ -17,14 +73,28 @@ public class ArchaeologicalFind
     /// <param name="archaeologicalFind">Находка.</param>
     public static void AddFind(ICollection<ArchaeologicalFind> finds, ArchaeologicalFind archaeologicalFind)
     {
-        throw new NotImplementedException();
+        ++TotalFindsNumber;
+        foreach (var find in finds)
+        {
+            if (archaeologicalFind.Equals(find))
+            {
+                return;
+            }
+        }
+        archaeologicalFind.findNumber = finds.Count;
+        finds.Add(archaeologicalFind);
     }
 
 
     public override bool Equals(object obj)
     {
-        throw new NotImplementedException();
+        if (obj is ArchaeologicalFind arch)
+        {
+            return age == arch.age && weight == arch.weight 
+                && name == arch.name;
+        }
+        return false;
     }
     
-    public override string ToString() => throw new NotImplementedException();
+    public override string ToString() => $"{findNumber} {name} {age} {weight}";
 }

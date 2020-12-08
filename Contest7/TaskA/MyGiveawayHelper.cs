@@ -2,16 +2,28 @@
 
 internal class MyGiveawayHelper
 {
+    private int randomNumber = 1579;
+    private int currentPrize = 0;
+    string[] logins;
+    string[] prizes;
 
     public MyGiveawayHelper(string[] logins, string[] prizes)
     {
-        throw new NotImplementedException();
+        this.logins = logins;
+        this.prizes = prizes;
     }
 
-    public bool HasPrizes => throw new NotImplementedException();
+    public bool HasPrizes => currentPrize < prizes.Length;
 
-    public (string prize,string login) GetPrizeLogin()
+    private void GenerateNextRandomNumber()
     {
-        throw new NotImplementedException();
+        int nextRandomNumber = randomNumber * randomNumber / 100 % 10000;
+        randomNumber = nextRandomNumber;
     }
-}   
+
+    public (string prize, string login) GetPrizeLogin()
+    {
+        GenerateNextRandomNumber();
+        return (prizes[currentPrize++], logins[randomNumber % logins.Length]);
+    }
+}
