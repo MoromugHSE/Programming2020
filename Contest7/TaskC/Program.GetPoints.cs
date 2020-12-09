@@ -10,7 +10,14 @@ public partial class Program
     /// <returns>Список точек.</returns>
     private static List<Point> GetPoints()
     {
-        throw new NotImplementedException();
+        List<Point> result = new List<Point>();
+        foreach (var unsplitted in File.ReadLines(InputPath))
+        {
+            string[] unparsed = unsplitted.Split();
+            int[] parsed = Array.ConvertAll(unparsed, int.Parse);
+            result.Add(new Point(parsed[0], parsed[1], parsed[2]));
+        }
+        return result;
     }
 
 
@@ -21,6 +28,11 @@ public partial class Program
     /// <returns>Коллекция точек.</returns>
     private static HashSet<Point> GetUnique(List<Point> points)
     {
-        throw new NotImplementedException();
+        HashSet<Point> result = new HashSet<Point>();
+        foreach (var point in points)
+        {
+            result.Add(point);
+        }
+        return result;
     }
 }

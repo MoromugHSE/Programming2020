@@ -1,15 +1,29 @@
 using System;
 
+
 public class Point
 {
+    int x;
+    int y;
+    int z;
+
     public Point(int x, int y, int z)
     {
-        throw new NotImplementedException();
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
-    public override bool Equals(object obj) => throw new NotImplementedException();
+    public override bool Equals(object obj)
+    {
+        if (obj is Point point)
+        {
+            return GetHashCode() == point.GetHashCode();
+        }
+        return false;
+    }
 
-    public override int GetHashCode() => throw new NotImplementedException();
+    public override int GetHashCode() => HashCode.Combine(x, y, z);
 
-    public override string ToString() => throw new NotImplementedException();
+    public override string ToString() => $"{x} {y} {z}";
 }

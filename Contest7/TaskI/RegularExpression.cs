@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 public class RegularExpression
 {
@@ -11,6 +12,6 @@ public class RegularExpression
 
     public string FindAndReplace(string text, string replace)
     {
-        throw new NotImplementedException();
+        return Regex.;
     }
 }
