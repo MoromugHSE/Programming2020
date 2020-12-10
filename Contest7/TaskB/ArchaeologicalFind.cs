@@ -8,6 +8,7 @@ public class ArchaeologicalFind
     private int weight;
     private int findNumber;
     private string name;
+    private static int alreadyFound = 0;
 
     private static int findsNumber;
 
@@ -17,7 +18,7 @@ public class ArchaeologicalFind
         Weight = weight;
         Name = name;
     }
-    
+
     public int Age
     {
         get => age;
@@ -49,7 +50,7 @@ public class ArchaeologicalFind
         get => name;
         private set
         {
-            if (value.Equals("?"))
+            if (value == "?")
             {
                 throw new ArgumentException("Undefined name");
             }
@@ -81,7 +82,7 @@ public class ArchaeologicalFind
                 return;
             }
         }
-        archaeologicalFind.findNumber = finds.Count;
+        archaeologicalFind.findNumber = TotalFindsNumber - 1;
         finds.Add(archaeologicalFind);
     }
 
@@ -90,11 +91,11 @@ public class ArchaeologicalFind
     {
         if (obj is ArchaeologicalFind arch)
         {
-            return age == arch.age && weight == arch.weight 
+            return age == arch.age && weight == arch.weight
                 && name == arch.name;
         }
         return false;
     }
-    
+
     public override string ToString() => $"{findNumber} {name} {age} {weight}";
 }

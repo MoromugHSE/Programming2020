@@ -12,6 +12,6 @@ public class RegularExpression
 
     public string FindAndReplace(string text, string replace)
     {
-        return Regex.;
+        throw new NotImplementedException();
     }
 }
