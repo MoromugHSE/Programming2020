@@ -6,7 +6,7 @@ public class Snowflake
 {
     int widthAndHeight;
     int raysCount;
-    char[,] snowflake;
+    char[][] snowflake;
 
     public Snowflake(int widthAndHeight, int raysCount)
     {
@@ -34,7 +34,7 @@ public class Snowflake
         private set
         {
             if (value < 4 ||
-                Abs(Pow(2, (int)Log2(value)) - value) > 1e-8)
+                !IsPowerOfTwo(value))
             {
                 throw new ArgumentException("Incorrect input");
             }
@@ -42,38 +42,79 @@ public class Snowflake
         }
     }
 
+    private bool IsPowerOfTwo(int value)
+    {
+        while (value > 1)
+        {
+            if (value % 2 != 0)
+            {
+                return false;
+            }
+            value /= 2;
+        }
+        return true;
+    }
+
     public override string ToString()
     {
         StringBuilder resultBuilder = new StringBuilder();
         for (int i = 0; i < widthAndHeight; ++i)
         {
-            StringBuilder rowBuilder = new StringBuilder(snowflake[i, 0].ToString());
-            for (int j = 1; j < widthAndHeight; ++j)
-            {
-                rowBuilder.Append($" {snowflake[i, j]}");
-            }
-            resultBuilder.AppendLine(rowBuilder.ToString());
+            string row = string.Join(' ', snowflake[i]);
+            resultBuilder.AppendLine(row);
         }
         return resultBuilder.ToString();
     }
 
     private void MakeSnowFlake()
     {
-        snowflake = new char[widthAndHeight, widthAndHeight];
+        snowflake = new char[widthAndHeight][];
         for (int i = 0; i < widthAndHeight; ++i)
         {
+            snowflake[i] = new char[widthAndHeight];
             for (int j = 0; j < widthAndHeight; ++j)
             {
-                if (i == widthAndHeight / 2 || j == widthAndHeight / 2
-                    || (i + j) % 2 == 0)
+                if (i == widthAndHeight / 2 || j == widthAndHeight / 2)
                 {
-                    snowflake[i, j] = '*';
+                    snowflake[i][j] = '*';
+                }
+                else if (raysCount > 4 && (i == j || i + j == widthAndHeight - 1))
+                {
+                    snowflake[i][j] = '*';
                 }
                 else
                 {
-                    snowflake[i, j] = ' ';
+                    snowflake[i][j] = ' ';
                 }
             }
+        }
+        int otherRays = raysCount - 8;
+        int change = 2;
+        (int i, int j) center = (widthAndHeight / 2, widthAndHeight / 2);
+        while (otherRays > 0 && change <= widthAndHeight / 2)
+        {
+            DrawRay((center.i, center.j - change), (-1, -1));
+            DrawRay((center.i, center.j - change), (1, -1));
+            DrawRay((center.i + change, center.j), (1, -1));
+            DrawRay((center.i + change, center.j), (1, 1));
+            DrawRay((center.i, center.j + change), (1, 1));
+            DrawRay((center.i, center.j + change), (-1, 1));
+            DrawRay((center.i - change, center.j), (-1, 1));
+            DrawRay((center.i - change, center.j), (-1, -1));
+            otherRays -= 8;
+            change += 2;
+        }
+    }
+
+    private void DrawRay((int, int) point, (int, int) delta)
+    {
+        int i = point.Item1;
+        int j = point.Item2;
+        while (i >= 0 && i < widthAndHeight && j >= 0 && j < widthAndHeight)
+        {
+            snowflake[i][j] = '*';
+            i += delta.Item1;
+            j += delta.Item2;
         }
     }
 }
