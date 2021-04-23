@@ -11,11 +11,25 @@ public class Student
 
     public Student(string name, string lastName, int groupNumber, List<int> grades)
     {
-        throw new NotImplementedException();
+        Name = name;
+        LastName = lastName;
+        GroupNumber = groupNumber;
+        Grades = grades;
     }
 
     public static Student Create(string studentInfo)
     {
-        throw new NotImplementedException();
+        string[] splitted = studentInfo.Split();
+        string name = splitted[0];
+        string lastName = splitted[1];
+        // Fighting your own computer is hard...
+        int groupNumber = int.Parse(splitted[2]);
+        var grades = new List<int>();
+        for (int i = 3; i < splitted.Length; ++i)
+        {
+            grades.Add(int.Parse(splitted[i]));
+        }
+
+        return new Student(name, lastName, groupNumber, grades);
     }
 }
