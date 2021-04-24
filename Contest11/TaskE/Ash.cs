@@ -10,7 +10,7 @@ public class Ash : Tree
 
     public Ash(int height, int age, int leafCount) : base(height, age)
     {
-        throw new NotImplementedException();
+        this.leafCount = leafCount;
     }
 
     public override string ToString()

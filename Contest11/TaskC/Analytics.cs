@@ -12,7 +12,7 @@ public static class Analytics
             gpaSum += student.GetGpa();
         }
 
-        return Math.Round(gpaSum / students.Count, 2);
+        return gpaSum / students.Count;
     }
 
 
@@ -20,7 +20,7 @@ public static class Analytics
     {
         using (StreamWriter sr = File.CreateText(path))
         {
-            sr.WriteLine(gpa);
+            sr.WriteLine(Math.Round(gpa, 2));
             foreach (var student in students)
             {
                 if (!(student.GetGpa() < gpa))

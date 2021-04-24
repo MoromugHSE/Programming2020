@@ -1,11 +1,14 @@
 using System;
+using System.Xml.Serialization;
 
-[Serializable]
-public class Pillow
+public class Pillow : Furniture
 {
-    public string IsRuinedStr => throw new NotImplementedException();
+    public string isRuined;
 
-    public Pillow(long id, bool isRuined)
+    public Pillow() { }
+
+    public Pillow(long id, bool isRuined) : base(id)
     {
+        this.isRuined = isRuined ? "Yes" : "No";
     }
 }

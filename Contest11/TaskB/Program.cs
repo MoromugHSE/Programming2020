@@ -2,7 +2,7 @@
 {
     public static void Main(string[] args)
     {
-        Serializer.ReadStudents("input.txt");
-        Serializer.SerializeStudents("output.bin");
+        Serializer.ReadStudents(@"..\..\..\input.txt");
+        Serializer.SerializeStudents(@"..\..\..\..\TaskC\bin\Debug\netcoreapp3.1\input.bin");
     }
 }

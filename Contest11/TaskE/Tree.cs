@@ -1,6 +1,8 @@
 using System;
+using System.Xml.Serialization;
 
-public class Tree 
+[XmlInclude(typeof(Ash)), XmlInclude(typeof(Oak))]
+public class Tree : IComparable<Tree>
 {
     public int height;
     public int age;
@@ -11,7 +13,13 @@ public class Tree
 
     public Tree(int height, int age)
     {
-        throw new NotImplementedException();
+        this.height = height;
+        this.age = age;
+    }
+
+    public int CompareTo(Tree tree)
+    {
+        return this.height.CompareTo(tree.height);
     }
 
     public override string ToString()

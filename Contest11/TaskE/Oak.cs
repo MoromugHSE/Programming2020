@@ -10,7 +10,7 @@ public class Oak : Tree
 
     public Oak(int height, int age, int acornCount) : base(height, age)
     {
-        throw new NotImplementedException();
+        this.acornCount = acornCount;
     }
 
     public override string ToString()

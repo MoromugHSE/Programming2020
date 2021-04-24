@@ -11,10 +11,7 @@ public static class Deserializer
         var bf = new BinaryFormatter();
         using (FileStream fs = File.OpenRead(path))
         {
-            while (fs.Position < fs.Length)
-            {
-                students.Add((Student)bf.Deserialize(fs));
-            }
+            students = (List<Student>)bf.Deserialize(fs);
         }
 
         return students;
